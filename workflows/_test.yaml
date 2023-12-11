@@ -9,25 +9,25 @@ jobs:
     steps:
       - name: Set up repository
         uses: actions/checkout@v4
-      - uses: kc-workspace/example-ts@main
-      - uses: kc-workspace/example-ts@main
+      - uses: kc-workspace/github-actions/example-ts@main
+      - uses: kc-workspace/github-actions/example-ts@main
         with:
           name: custom
-      - uses: kc-workspace/example-ts@main
+      - uses: kc-workspace/github-actions/example-ts@main
         with:
           name: custom
           dryrun: true
-      - uses: kc-workspace/example-ts@main
+      - uses: kc-workspace/github-actions/example-ts@main
         env:
           DRYRUN: true
 
-      - uses: kc-workspace/setup-asdf@main
+      - uses: kc-workspace/github-actions/setup-asdf@main
 
-      - uses: kc-workspace/create-hosts@main
+      - uses: kc-workspace/github-actions/create-hosts@main
         with:
           domains: runner.com
           dryrun: true
-      - uses: kc-workspace/create-hosts@main
+      - uses: kc-workspace/github-actions/create-hosts@main
         with:
           domains: example.com,hello-world.com
       - run: docker run --name nginx --rm --publish 9999:80 --detach nginx:stable
