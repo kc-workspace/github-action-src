@@ -58,7 +58,7 @@ jobs:
       - name: Set up target repository
         uses: actions/checkout@v4
         with:
-          repository: cognius/github-actions
+          repository: kc-workspace/github-actions
           ref: ${{ env.ACTIONS_TARGET_BRANCH }}
           path: ${{ env.ACTIONS_TARGET_DIRECTORY }}
           ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}

@@ -27,7 +27,7 @@ cp -r "$_ROOT/workflows"/** "$_GH_WORKFLOW"
 cp -r "$_ROOT/resources"/** "$_GH_ACTIONS"
 
 cd "$_ROOT/$_GH_ACTIONS" || exit 1
-printf 'move to '%s'' "$PWD"
+printf 'move to '%s'\n' "$PWD"
 
 git status
 ## Deployment only if file changes
