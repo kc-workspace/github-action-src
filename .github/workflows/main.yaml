@@ -65,3 +65,5 @@ jobs:
           fetch-depth: 0
       - name: Deploy target repository
         run: scripts/deploy.sh
+        env:
+          ACTIONS_FORCE_MODE: true

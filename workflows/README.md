@@ -1,6 +1,6 @@
 # Workflows
 
-Shared workflows
+A private and shared workflows. All private workflows should prefix with `_`.
 
 ## Usage
 

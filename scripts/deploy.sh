@@ -18,20 +18,21 @@ error() {
 ! command -v pnpm && error "command 'pnpm' is missing"
 
 ## Build actions
-cd actions && pnpm build
+cd actions && pnpm build || exit 1
+cd "$_ROOT" || exit 1
 
 ! test -d "$_GH_WORKFLOW" && mkdir -p "$_GH_WORKFLOW"
 
 ## Copy workflows and resources
-cp -r "$_ROOT/workflows"/** "$_GH_WORKFLOW"
-cp -r "$_ROOT/resources"/** "$_GH_ACTIONS"
+cp -r "$_ROOT/resources/." "$_GH_ACTIONS"
+cp -r "$_ROOT/workflows/." "$_GH_WORKFLOW"
 
 cd "$_ROOT/$_GH_ACTIONS" || exit 1
-printf 'move to '%s'\n' "$PWD"
 
+printf 'deploying '%s'\n' "$PWD"
 git status
 ## Deployment only if file changes
-if ! git diff --exit-code --quiet; then
+if ! git diff --exit-code --quiet || test -n "$ACTIONS_FORCE_MODE"; then
   git config --local user.name "$ACTIONS_COMMIT_NAME"
   git config --local user.email "$ACTIONS_COMMIT_EMAIL"
 
