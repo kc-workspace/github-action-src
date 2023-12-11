@@ -1,0 +1,11 @@
+name: Example
+
+on:
+  workflow_call:
+
+jobs:
+  example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: example
+        uses: kc-workspace/github-actions/example-ts@v1

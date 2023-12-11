@@ -1,0 +1,65 @@
+name: Main
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        type: choice
+        description: Target branch name
+        required: false
+        default: main
+        options:
+          ## v1 is a fixed major version
+          - v1
+          ## main will always be latest (regardless of major version)
+          - main
+          ## dev is for testing only
+          - dev
+
+  push:
+    branches:
+      - main
+
+env:
+  ACTIONS_COMMIT_NAME: github-actions[bot]
+  ACTIONS_COMMIT_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+  ACTIONS_COMMIT_MSG: "perf(core): automatically updates (bot)"
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_TARGET_BRANCH: ${{ inputs.branch || 'main' }}
+      ACTIONS_TARGET_DIRECTORY: .cache
+    steps:
+      - name: Set up base repository
+        uses: actions/checkout@v4
+      - name: Set up target repository
+        uses: actions/checkout@v4
+        with:
+          repository: cognius/github-actions
+          ref: ${{ env.ACTIONS_TARGET_BRANCH }}
+          path: ${{ env.ACTIONS_TARGET_DIRECTORY }}
+          ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          fetch-depth: 0
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          package_json_file: actions/package.json
+      - name: Set up nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: actions/package.json
+          cache-dependency-path: actions/pnpm-lock.yaml
+          cache: pnpm
+
+      - name: Install actions dependencies
+        working-directory: actions
+        run: pnpm install
+      - name: Lint actions
+        working-directory: actions
+        run: pnpm lint
+      - name: Test actions
+        working-directory: actions
+        run: pnpm test
