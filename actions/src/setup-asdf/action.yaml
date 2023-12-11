@@ -6,6 +6,9 @@ inputs:
   ref:
     description: asdf reference to install
     default: master
+  asdfdir:
+    description: a directory where asdf should be
+    required: false
   workdir:
     description: all commands will run from this directory
     default: ${{ github.workspace }}

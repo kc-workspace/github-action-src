@@ -14,8 +14,8 @@ const toHosts = (host: string): string[] => {
     .filter((h) => h !== "")
 }
 
-export default Actions.builder(context, (context_) => {
-  const input = context_.use("input")
+export default Actions.builder(context, (context) => {
+  const input = context.use("input")
   return {
     domains: toHosts(input.requiredString("domains")),
     ip: input.requiredString("ip"),

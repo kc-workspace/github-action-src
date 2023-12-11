@@ -9,6 +9,9 @@ inputs:
   ip:
     description: target ip-address
     default: 127.0.0.1
+  dryrun:
+    description: dry-run the command instead executes
+    required: false
 
 # outputs:
 #   output:

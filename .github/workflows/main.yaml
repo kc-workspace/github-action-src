@@ -34,15 +34,6 @@ jobs:
     steps:
       - name: Set up base repository
         uses: actions/checkout@v4
-      - name: Set up target repository
-        uses: actions/checkout@v4
-        with:
-          repository: cognius/github-actions
-          ref: ${{ env.ACTIONS_TARGET_BRANCH }}
-          path: ${{ env.ACTIONS_TARGET_DIRECTORY }}
-          ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          fetch-depth: 0
-
       - name: Set up pnpm
         uses: pnpm/action-setup@v2
         with:
@@ -63,3 +54,14 @@ jobs:
       - name: Test actions
         working-directory: actions
         run: pnpm test
+
+      - name: Set up target repository
+        uses: actions/checkout@v4
+        with:
+          repository: cognius/github-actions
+          ref: ${{ env.ACTIONS_TARGET_BRANCH }}
+          path: ${{ env.ACTIONS_TARGET_DIRECTORY }}
+          ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          fetch-depth: 0
+      - name: Deploy target repository
+        run: scripts/deploy.sh
