@@ -8,7 +8,6 @@ import StatoscopePlugin from "@statoscope/webpack-plugin"
 
 import { Config } from "./internal/rspack"
 
-
 export const relative = (...paths: string[]): string => {
   // rspack config was not support module yet
   // eslint-disable-next-line unicorn/prefer-module
