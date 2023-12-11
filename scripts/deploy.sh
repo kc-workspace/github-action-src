@@ -26,13 +26,14 @@ cd actions && pnpm build
 cp -r "$_ROOT/workflows"/** "$_GH_WORKFLOW"
 cp -r "$_ROOT/resources"/** "$_GH_ACTIONS"
 
-cd "$_GH_ACTIONS"
+cd "$_ROOT/$_GH_ACTIONS" || exit 1
+printf 'move to '%s'' "$PWD"
 
 git status
 ## Deployment only if file changes
 if ! git diff --exit-code --quiet; then
-  git config user.name "$ACTIONS_COMMIT_NAME"
-  git config user.email "$ACTIONS_COMMIT_EMAIL"
+  git config --local user.name "$ACTIONS_COMMIT_NAME"
+  git config --local user.email "$ACTIONS_COMMIT_EMAIL"
 
   git add -A
   git commit -m "$ACTIONS_COMMIT_MSG"
