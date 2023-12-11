@@ -4,8 +4,10 @@ import type { RspackPluginInstance } from "@rspack/core"
 
 import { existsSync } from "node:fs"
 import { resolve } from "node:path"
-import { Config } from "@internal/rspack"
 import StatoscopePlugin from "@statoscope/webpack-plugin"
+
+import { Config } from "./internal/rspack"
+
 
 export const relative = (...paths: string[]): string => {
   // rspack config was not support module yet
