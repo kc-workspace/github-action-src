@@ -20,5 +20,6 @@ export default Actions.builder(context, (context) => {
     domains: toHosts(input.requiredString("domains")),
     ip: input.requiredString("ip"),
     tableFile: "/etc/hosts",
+    cacheFile: "/etc/hosts.tmp",
   }
 })

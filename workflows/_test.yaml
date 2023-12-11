@@ -4,29 +4,50 @@ on:
   push:
 
 jobs:
-  test:
+  test-example-default:
     runs-on: ubuntu-latest
     steps:
       - name: Set up repository
         uses: actions/checkout@v4
       - uses: kc-workspace/github-actions/example-ts@main
+  test-example-custom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up repository
+        uses: actions/checkout@v4
       - uses: kc-workspace/github-actions/example-ts@main
         with:
           name: custom
-      - uses: kc-workspace/github-actions/example-ts@main
-        with:
-          name: custom
-          dryrun: true
-      - uses: kc-workspace/github-actions/example-ts@main
-        env:
-          DRYRUN: true
-
+  test-asdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up repository
+        uses: actions/checkout@v4
       - uses: kc-workspace/github-actions/setup-asdf@main
-
+  test-create-hosts-dryrun:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up repository
+        uses: actions/checkout@v4
       - uses: kc-workspace/github-actions/create-hosts@main
         with:
           domains: runner.com
           dryrun: true
+      - uses: kc-workspace/github-actions/create-hosts@main
+        with:
+          domains: runner.com
+        env:
+          DRYRUN: true
+      - uses: kc-workspace/github-actions/create-hosts@main
+        with:
+          domains: runner.com
+        env:
+          CREATE_HOSTS__DRYRUN: true
+  test-create-hosts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up repository
+        uses: actions/checkout@v4
       - uses: kc-workspace/github-actions/create-hosts@main
         with:
           domains: example.com,hello-world.com

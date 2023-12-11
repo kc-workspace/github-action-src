@@ -15,10 +15,12 @@ describe("action post runner", () => {
     await app.exec(run)
 
     // Expected rules
-    expect(exec).toHaveBeenCalledTimes(1)
-    expect(exec).toHaveBeenCalledWith(
+    expect(exec).toHaveBeenCalledTimes(2)
+    expect(exec).toHaveBeenNthCalledWith(
+      1,
       "sudo",
       ["rm", "-f", "/etc/hosts"],
+      // eslint-disable-next-line unicorn/no-useless-undefined
       undefined
     )
   })
@@ -26,10 +28,12 @@ describe("action post runner", () => {
     await app.exec(run, { tableFile: "/usr/etc/hosts" })
 
     // Expected rules
-    expect(exec).toHaveBeenCalledTimes(1)
-    expect(exec).toHaveBeenCalledWith(
+    expect(exec).toHaveBeenCalledTimes(2)
+    expect(exec).toHaveBeenNthCalledWith(
+      1,
       "sudo",
       ["rm", "-f", "/usr/etc/hosts"],
+      // eslint-disable-next-line unicorn/no-useless-undefined
       undefined
     )
   })

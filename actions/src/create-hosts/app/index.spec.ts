@@ -32,6 +32,7 @@ describe("action application", () => {
           domains: ["example", "hello"],
           ip: "example,hello",
           tableFile: "/etc/hosts",
+          cacheFile: "/etc/hosts.tmp",
         },
       },
       context
