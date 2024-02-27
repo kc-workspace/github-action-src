@@ -18,7 +18,7 @@ describe("action application", () => {
   test("contains export default", async () => {
     expect(app).toBeDefined()
 
-    asMock(getInput).mockImplementationOnce((name) =>
+    asMock(getInput).mockImplementationOnce(name =>
       name === "ref" ? "dev" : ""
     )
 

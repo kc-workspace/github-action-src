@@ -18,4 +18,4 @@ class BooleanConverter implements Converter {
 }
 
 export const toBool: Converter = new BooleanConverter()
-export const convertToBool: Convert = (input) => convert(input, toBool)
+export const convertToBool: Convert = input => convert(input, toBool)

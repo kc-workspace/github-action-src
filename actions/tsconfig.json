@@ -5,7 +5,7 @@
     "internal",
     "rspack.config.ts",
     "jest.config.ts",
-    ".eslintrc.js"
+    ".eslintrc.cjs"
   ],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */

@@ -8,10 +8,10 @@
  */
 const buildKeys = (...data: (string | undefined | null)[]) => {
   return data
-    .filter((v) => (v?.length ?? 0) > 0)
-    .map((v) => v?.replace("-", "_")?.replace(" ", "_")?.toUpperCase())
+    .filter(v => (v?.length ?? 0) > 0)
+    .map(v => v?.replace("-", "_")?.replace(" ", "_")?.toUpperCase())
     .map((_, index, a) => a.slice(index).join("."))
-    .map((v) => v.replace(".", "__"))
+    .map(v => v.replace(".", "__"))
 }
 
 export const findEnvironment = (

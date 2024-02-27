@@ -16,4 +16,4 @@ class FloatConverter implements Converter {
 }
 
 export const toFloat: Converter = new FloatConverter()
-export const convertToFloat: Convert = (input) => convert(input, toFloat)
+export const convertToFloat: Convert = input => convert(input, toFloat)

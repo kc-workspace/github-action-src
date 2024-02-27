@@ -16,4 +16,4 @@ class IntConverter implements Converter {
 }
 
 export const toInt: Converter = new IntConverter()
-export const convertToInt: Convert = (input) => convert(input, toInt)
+export const convertToInt: Convert = input => convert(input, toInt)

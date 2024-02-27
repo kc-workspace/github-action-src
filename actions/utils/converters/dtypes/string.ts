@@ -19,4 +19,4 @@ class StringConverter implements Converter {
 }
 
 export const toString: Converter = new StringConverter()
-export const convertToString: Convert = (input) => convert(input, toString)
+export const convertToString: Convert = input => convert(input, toString)

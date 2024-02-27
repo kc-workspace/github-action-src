@@ -12,7 +12,7 @@ export const context = ContextBuilder.builder("example-ts", "v0.1.0-dev")
   .addPlugin(new ExecContextPlugin())
   .build()
 
-export default Actions.builder(context, (context_) => {
+export default Actions.builder(context, context_ => {
   return {
     name: context_.use("input").optionalString("name") ?? "example",
   }

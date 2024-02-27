@@ -32,7 +32,7 @@ describe("utils.inputs.finder", () => {
   })
 
   test("if found inputs on input", () => {
-    asMock(getInput).mockImplementationOnce((name) => {
+    asMock(getInput).mockImplementationOnce(name => {
       switch (name) {
         case "test": {
           return "hello"

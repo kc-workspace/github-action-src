@@ -10,11 +10,11 @@ export const context = ContextBuilder.builder("create-hosts", "v0.1.0-dev")
 const toHosts = (host: string): string[] => {
   return host
     .split(",")
-    .flatMap((h) => h.split("\n"))
-    .filter((h) => h !== "")
+    .flatMap(h => h.split("\n"))
+    .filter(h => h !== "")
 }
 
-export default Actions.builder(context, (context) => {
+export default Actions.builder(context, context => {
   const input = context.use("input")
   return {
     domains: toHosts(input.requiredString("domains")),
