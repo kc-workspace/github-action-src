@@ -47,7 +47,7 @@ jobs:
       - name: Install dependencies
         run: common/scripts/index.sh install
       - name: Lint / Build / Test packages
-        run: common/scripts/index.sh build
+        run: common/scripts/index.sh test
 
       - name: Set up target repository
         uses: actions/checkout@v4
