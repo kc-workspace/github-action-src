@@ -30,6 +30,7 @@ jobs:
     env:
       AC_FORCE: ${{ inputs.force }}
       AC_AUTOBUILD: false
+      AC_OUTPUT: common/temp/actions
       AC_COMMIT_REPO: kc-workspace/github-actions
       AC_COMMIT_BRANCH: ${{ inputs.branch || 'main' }}
     steps:
@@ -52,9 +53,9 @@ jobs:
       - name: Set up target repository
         uses: actions/checkout@v4
         with:
-          repository: kc-workspace/github-actions
+          repository: ${{ env.AC_COMMIT_REPO }}
           ref: ${{ env.AC_COMMIT_BRANCH }}
-          path: ${{ env.AC_COMMIT_REPO }}
+          path: ${{ env.AC_OUTPUT }}
           ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           fetch-depth: 0
       - name: Deploy target repository
