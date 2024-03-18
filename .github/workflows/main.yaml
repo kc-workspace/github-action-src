@@ -15,55 +15,47 @@ on:
           - main
           ## dev is for testing only
           - dev
-
+      force:
+        type: boolean
+        description: Force the deployment
+        required: false
+        default: false
   push:
     branches:
       - main
-
-env:
-  ACTIONS_COMMIT_NAME: github-actions[bot]
-  ACTIONS_COMMIT_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
-  ACTIONS_COMMIT_MSG: "perf(core): automatically updates (bot)"
 
 jobs:
   main:
     runs-on: ubuntu-latest
     env:
-      ACTIONS_TARGET_BRANCH: ${{ inputs.branch || 'main' }}
-      ACTIONS_TARGET_DIRECTORY: .cache
+      AC_FORCE: ${{ inputs.force }}
+      AC_AUTOBUILD: false
+      AC_COMMIT_REPO: kc-workspace/github-actions
+      AC_COMMIT_BRANCH: ${{ inputs.branch || 'main' }}
     steps:
       - name: Set up base repository
         uses: actions/checkout@v4
       - name: Set up pnpm
         uses: pnpm/action-setup@v2
-        with:
-          package_json_file: actions/package.json
       - name: Set up nodejs
         uses: actions/setup-node@v4
         with:
-          node-version-file: actions/package.json
-          cache-dependency-path: actions/pnpm-lock.yaml
+          node-version-file: package.json
+          cache-dependency-path: pnpm-lock.yaml
           cache: pnpm
 
-      - name: Install actions dependencies
-        working-directory: actions
-        run: pnpm install
-      - name: Lint actions
-        working-directory: actions
-        run: pnpm lint
-      - name: Test actions
-        working-directory: actions
-        run: pnpm test
+      - name: Install dependencies
+        run: common/scripts/index.sh install
+      - name: Lint / Build / Test packages
+        run: common/scripts/index.sh build
 
       - name: Set up target repository
         uses: actions/checkout@v4
         with:
           repository: kc-workspace/github-actions
-          ref: ${{ env.ACTIONS_TARGET_BRANCH }}
-          path: ${{ env.ACTIONS_TARGET_DIRECTORY }}
+          ref: ${{ env.AC_COMMIT_BRANCH }}
+          path: ${{ env.AC_COMMIT_REPO }}
           ssh-key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           fetch-depth: 0
       - name: Deploy target repository
-        run: scripts/deploy.sh
-        env:
-          ACTIONS_FORCE_MODE: true
+        run: common/scripts/index.sh deploy

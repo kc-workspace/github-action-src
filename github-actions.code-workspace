@@ -1,33 +1,29 @@
 {
   "folders": [
     {
-      "name": "actions",
-      "path": "actions"
+      "name": "@kcws/actions",
+      "path": "actions",
     },
     {
-      "name": "workflows",
-      "path": "workflows"
+      "name": "@kcws/utils",
+      "path": "utils",
     },
     {
-      "name": "resources",
-      "path": "resources"
+      "name": "@common/resources",
+      "path": "common/resources",
     },
     {
-      "name": "scripts",
-      "path": "scripts"
-    },
-    {
-      "name": ".github",
-      "path": ".github"
+      "name": "@common/scripts",
+      "path": "common/scripts",
     },
     {
       "name": "root",
-      "path": "."
-    }
+      "path": ".",
+    },
   ],
   "settings": {
     "yaml.schemas": {
-      "https://json.schemastore.org/github-action.json": "actions/**/*.yaml"
-    }
-  }
+      "https://json.schemastore.org/github-action.json": "actions/packages/**/*.yaml",
+    },
+  },
 }
