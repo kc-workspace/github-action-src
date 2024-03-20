@@ -68,10 +68,12 @@ _execute_deploy() {
     git status
 
     if ! git diff --exit-code --quiet || "$_AC_FORCE"; then
+      info "Updating user config on git"
       git config --local user.name "$_AC_COMMIT_NAME"
       git config --local user.email "$_AC_COMMIT_EMAIL"
 
-      git add -A
+      info "Deploying all changed to git"
+      git add --all
       git commit -m "$_AC_COMMIT_MSG"
       git push origin "$_AC_COMMIT_BRANCH"
     fi
