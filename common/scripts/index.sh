@@ -61,18 +61,16 @@ _execute_deploy() {
     fi
   done
 
-  if test -n "$CI" && test -n "$GITHUB_ACTIONS" || $_AC_FORCE; then
+  if test -n "$CI" && test -n "$GITHUB_ACTIONS" || "$_AC_FORCE"; then
     cd "$output"
 
     info "Starting deploy '%s' package" "$PWD"
     git status
 
-    if ! git diff --exit-code --quiet || "$_AC_FORCE"; then
-      info "Updating user config on git"
+    if ! test -z "$(git status --porcelain)" || "$_AC_FORCE"; then
       git config --local user.name "$_AC_COMMIT_NAME"
       git config --local user.email "$_AC_COMMIT_EMAIL"
 
-      info "Deploying all changed to git"
       git add --all
       git commit -m "$_AC_COMMIT_MSG"
       git push origin "$_AC_COMMIT_BRANCH"
