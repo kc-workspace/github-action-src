@@ -21,11 +21,11 @@ jobs:
 ## Configurations
 
 The configurations can be sent to the action in 2 ways:
-[Environment variables][gh-actions-env] or [Input][gh-actions-input]
+[Environment variables][gha-env-url] or [Input][gha-input-url]
 (The environment will always has priority over `with` fields).
 
-[gh-actions-env]: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv
-[gh-actions-input]: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith
+[gha-env-url]: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsenv
+[gha-input-url]: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepswith
 
 ### Name
 
@@ -46,7 +46,7 @@ The configurations can be sent to the action in 2 ways:
 ## Source code
 
 <!-- TODO: Update below action name -->
-> [github-actions-src#action/example-ts][source-code-url]
+> [github-actions-src#action/example-ts][gha-src-url]
 
 <!-- TODO: Update below action directory -->
-[source-code-url]: https://github.com/kc-workspace/github-actions-src/tree/main/actions/example-ts
+[gha-src-url]: https://github.com/kc-workspace/github-actions-src/tree/main/actions/example-ts

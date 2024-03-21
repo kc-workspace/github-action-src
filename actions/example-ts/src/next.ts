@@ -1,3 +1,3 @@
-const name = "world"
+const greeting = "hello"
 
-export { name }
+export { greeting }

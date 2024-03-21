@@ -1,3 +1,6 @@
-import { name } from "./next"
+import { getInput } from "@actions/core"
 
-console.log(`hello ${name}`)
+import { greeting } from "./next"
+
+const name = getInput("name") ?? "world"
+console.log(`${greeting} ${name}`)
