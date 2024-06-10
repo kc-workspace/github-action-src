@@ -1,7 +1,7 @@
-import { name } from "./next"
+import { greeting } from "./next"
 
 describe("hello", () => {
   test("naming", () => {
-    expect(name).toEqual("world")
+    expect(greeting).toEqual("world")
   })
 })
