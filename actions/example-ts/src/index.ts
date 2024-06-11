@@ -1,6 +1,5 @@
-import { getInput } from "@actions/core"
+import actions from "./core/actions"
 
-import { greeting } from "./next"
-
-const name = getInput("name") ?? "world"
-console.log(`${greeting} ${name}`)
+actions.exec((data, context) => {
+  context.use("log").info("hello {name}", data.input)
+})
