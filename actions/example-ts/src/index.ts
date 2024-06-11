@@ -1,5 +1,11 @@
-import actions from "./core/actions"
+import { AppRunner } from "@kcws/github-actions"
 
-actions.exec((data, context) => {
+import actions from "./app"
+
+const runner: AppRunner<typeof actions> = (data, context) => {
   context.use("log").info("hello {name}", data.input)
-})
+}
+
+actions.exec(runner)
+
+export default runner

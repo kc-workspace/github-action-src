@@ -5,10 +5,6 @@
       "path": "actions",
     },
     {
-      "name": "@kcws/utils",
-      "path": "utils",
-    },
-    {
       "name": "@common/resources",
       "path": "common/resources",
     },
