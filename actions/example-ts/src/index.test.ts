@@ -8,7 +8,7 @@ import runner from "./index"
 describe("application runner", () => {
   test("should print info logs", async () => {
     await runner({ input: { name: "name" } }, context)
-    expect(info).toHaveBeenCalledTimes(1)
-    expect(info).toHaveBeenCalledWith("hello name")
+    expect(info).toHaveBeenCalledTimes(2)
+    expect(info).toHaveBeenLastCalledWith("hello name")
   })
 })
