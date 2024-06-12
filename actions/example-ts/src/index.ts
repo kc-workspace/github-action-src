@@ -7,6 +7,8 @@ const runner: AppRunner<typeof actions> = (data, context) => {
 
   logger.info("Use {0}: {1}", context.name, context.version)
   logger.info("hello {name}", data.input)
+  logger.info(process.cwd())
+  logger.info(__dirname)
 }
 
 actions.exec(runner)
