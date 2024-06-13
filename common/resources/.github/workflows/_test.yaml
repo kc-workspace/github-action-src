@@ -4,20 +4,25 @@ on:
   push:
 
 jobs:
-  test-example-default:
+  test-example:
     runs-on: ubuntu-latest
     steps:
       - name: Set up repository
         uses: actions/checkout@v4
-      - uses: kc-workspace/github-actions/example-ts@main
-  test-example-custom:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up repository
-        uses: actions/checkout@v4
-      - uses: kc-workspace/github-actions/example-ts@main
+      - name: example with default name
+        uses: kc-workspace/github-actions/example-ts@main
+      - name: example [with] custom name
+        uses: kc-workspace/github-actions/example-ts@main
         with:
           name: custom
+      - name: example [env] custom name [action specific]
+        uses: kc-workspace/github-actions/example-ts@main
+        env:
+          EXAMPLE_TS__NAME: action-specific
+      - name: example [env] custom name [generic name]
+        uses: kc-workspace/github-actions/example-ts@main
+        env:
+          NAME: action-specific
   test-asdf:
     runs-on: ubuntu-latest
     steps:
