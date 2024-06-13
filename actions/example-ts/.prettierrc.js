@@ -1,2 +1,2 @@
-const createConfig = require("@kcws/prettier-config")
-module.exports = createConfig({})
+const createConfig = require("@kcws/prettier-config");
+module.exports = createConfig({});

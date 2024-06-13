@@ -1,11 +1,4 @@
-import { AppRunner } from "@kcws/github-actions"
+import app from "./app"
+import runner from "./runners/pre"
 
-import actions from "./app"
-
-const runner: AppRunner<typeof actions> = (data, context) => {
-  context.use("log").info("hello pre {name}", data.input)
-}
-
-actions.exec(runner)
-
-export default runner
+app.exec(runner)
