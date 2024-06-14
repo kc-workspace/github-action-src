@@ -1,0 +1,36 @@
+name: Typescript Example
+description: Example actions written on Typescript
+author: Kamontat Chantrachirathumrong
+
+inputs:
+  ref:
+    description: asdf reference to install
+    default: master
+  install-tools:
+    description: install tool based from .tool-versions file
+    default: "false"
+  cache-enabled:
+    description: enabled caching downloaded asdf and tools
+    default: "true"
+  cache-key:
+    description: cache key for invalidate cache
+    default: ""
+  asdfdir:
+    description: a directory where asdf should be
+    required: false
+  workdir:
+    description: all commands will run from this directory
+    default: ${{ github.workspace }}
+  dryrun:
+    description: dry-run the command instead executes
+    required: false
+
+# outputs:
+#   output:
+#     description: Output description
+
+runs:
+  using: node20
+  pre: pre.js
+  main: index.js
+  post: post.js
