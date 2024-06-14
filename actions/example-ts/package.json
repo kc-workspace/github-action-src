@@ -19,11 +19,11 @@
     "clean": "heft clean"
   },
   "dependencies": {
-    "@kcws/github-actions": "0.8.1"
+    "@kcws/github-actions": "0.9.0"
   },
   "devDependencies": {
     "@kcws/eslint-config": "1.21.1",
-    "@kcws/heft-node-rig": "0.25.0",
+    "@kcws/heft-node-rig": "0.26.0",
     "@kcws/prettier-config": "0.17.2",
     "@rushstack/heft": "0.66.18",
     "@types/heft-jest": "1.0.6",
