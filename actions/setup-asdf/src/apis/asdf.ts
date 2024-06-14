@@ -4,6 +4,7 @@ import { join } from "node:path"
 import { readFile } from "node:fs/promises"
 import { AppContext } from "@kcws/github-actions"
 
+import { getPluginUrl } from "./constants"
 import app from "../app"
 
 export const asdfPluginList = async (context: AppContext<typeof app>) => {
@@ -21,9 +22,11 @@ export const asdfPluginList = async (context: AppContext<typeof app>) => {
 export const asdfPluginAdd = async (
   context: AppContext<typeof app>,
   plugin: string,
-  pluginUrl: string = "https://github.com/kc-workspace/asdf-{0}.git"
+  pluginUrl?: string
 ) => {
-  const repo = context.use("log").format(pluginUrl, plugin)
+  const repo = context
+    .use("log")
+    .format(getPluginUrl(plugin, pluginUrl), plugin)
   await context.use("exec").run("asdf", "plugin", "add", plugin, repo)
 }
 
