@@ -22,7 +22,7 @@ jobs:
       - name: example [env] custom name [generic name]
         uses: kc-workspace/github-actions/example-ts@main
         env:
-          NAME: action-specific
+          NAME: generic-name
   test-asdf:
     runs-on: ubuntu-latest
     steps:
