@@ -4,7 +4,7 @@ import type app from "../app"
 import { join } from "node:path"
 import { existsSync } from "node:fs"
 import { which } from "@actions/io"
-import { addPath, exportVariable } from "@actions/core"
+import { addPath, exportVariable, group } from "@actions/core"
 
 import {
   asdfPluginAdd,
@@ -28,62 +28,83 @@ const runner: AppRunner<typeof app> = async (data, context) => {
 }
 
 const asdfSetup: AppRunner<typeof app> = async (data, context) => {
-  context.use("log").debug("Setting up system for asdf")
+  return group("Set up asdf", async () => {
+    context.use("log").debug("Setting up system for asdf")
 
-  exportVariable("ASDF_DIR", data.input.asdfDir)
-  addPath(join(data.input.asdfDir, "bin"))
-  addPath(join(data.input.asdfDir, "shims"))
+    exportVariable("ASDF_DIR", data.input.asdfDir)
+    addPath(join(data.input.asdfDir, "bin"))
+    addPath(join(data.input.asdfDir, "shims"))
+  })
 }
 
 const asdfInstall: AppRunner<typeof app> = async (data, context) => {
   const executor = context.use("exec")
   const logger = context.use("log")
-  if (existsSync(data.input.asdfDir)) {
-    logger.info(
-      "Updating asdf to version '{0}' on (ASDF_DIR={1})",
-      data.input.ref,
-      data.input.asdfDir
-    )
+  return group("Install asdf", async () => {
+    if (existsSync(data.input.asdfDir)) {
+      logger.info(
+        "Updating asdf to version '{0}' on (ASDF_DIR={1})",
+        data.input.ref,
+        data.input.asdfDir
+      )
 
-    executor.withOptions({ cwd: data.input.asdfDir })
-    executor.rerun("git", "remote", "set-branches", "origin", data.input.ref)
-    executor.rerun("git", "fetch", "--depth", "1", "origin", data.input.ref)
-    executor.rerun("git", "checkout", "-B", data.input.ref, "origin")
-  } else {
-    logger.info(
-      "Installing asdf version '{0}' on (ASDF_DIR={1})",
-      data.input.ref,
-      data.input.asdfDir
-    )
+      executor.withOptions({ cwd: data.input.asdfDir })
+      await executor.rerun(
+        "git",
+        "remote",
+        "set-branches",
+        "origin",
+        data.input.ref
+      )
+      await executor.rerun(
+        "git",
+        "fetch",
+        "--depth",
+        "1",
+        "origin",
+        data.input.ref
+      )
+      await executor.rerun("git", "checkout", "-B", data.input.ref, "origin")
+    } else {
+      logger.info(
+        "Installing asdf version '{0}' on (ASDF_DIR={1})",
+        data.input.ref,
+        data.input.asdfDir
+      )
 
-    executor.rerun(
-      "git",
-      "clone",
-      "--depth",
-      "1",
-      "--branch",
-      data.input.ref,
-      "--single-branch",
-      "https://github.com/asdf-vm/asdf.git",
-      data.input.asdfDir
-    )
-  }
+      await executor.rerun(
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "--branch",
+        data.input.ref,
+        "--single-branch",
+        "https://github.com/asdf-vm/asdf.git",
+        data.input.asdfDir
+      )
+    }
+  })
 }
 
-const asdfInstallPlugins: AppRunner<typeof app> = async (data, context) => {
-  const installed = await asdfPluginList(context)
-  const toolVersion = await asdfToolList(context, data.input.workDir)
-  await Promise.all(
-    toolVersion.map(async ({ name }) => {
-      if (!installed.includes(name)) {
-        await asdfPluginAdd(context, name)
-      }
-    })
-  )
+const asdfInstallPlugins: AppRunner<typeof app> = (data, context) => {
+  return group("Install asdf plugins", async () => {
+    const installed = await asdfPluginList(context)
+    const toolVersion = await asdfToolList(context, data.input.workDir)
+    await Promise.all(
+      toolVersion.map(async ({ name }) => {
+        if (!installed.includes(name)) {
+          await asdfPluginAdd(context, name)
+        }
+      })
+    )
+  })
 }
 
-const asdfInstallTools: AppRunner<typeof app> = async (data, context) => {
-  await asdfToolInstall(context, data.input.workDir)
+const asdfInstallTools: AppRunner<typeof app> = (data, context) => {
+  return group("Install asdf tools", () => {
+    return asdfToolInstall(context, data.input.workDir)
+  })
 }
 
 export default runner

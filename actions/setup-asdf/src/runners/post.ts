@@ -4,6 +4,7 @@ import app from "../app"
 
 const runner: AppRunner<typeof app> = (data, context) => {
   if (data.input.cache.enabled) {
+    context.use("log").info("Uploading cache at {0}", data.input.asdfDir)
     context.use("cache").save(
       {
         system: true,
@@ -11,6 +12,8 @@ const runner: AppRunner<typeof app> = (data, context) => {
       },
       data.input.asdfDir
     )
+  } else {
+    context.use("log").info("Disabled caching via user config")
   }
 }
 
