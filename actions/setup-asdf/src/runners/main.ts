@@ -3,8 +3,6 @@ import type app from "../app"
 
 import { join } from "node:path"
 import { existsSync } from "node:fs"
-import { which } from "@actions/io"
-import { addPath, exportVariable, group } from "@actions/core"
 
 import {
   asdfPluginAdd,
@@ -16,7 +14,7 @@ import {
 const runner: AppRunner<typeof app> = async (data, context) => {
   await asdfSetup(data, context)
 
-  const path = await which("asdf", false)
+  const path = await context.use("io").which("asdf", false)
   if (path === undefined || path === null || path === "") {
     await asdfInstall(data, context)
   }
@@ -28,19 +26,23 @@ const runner: AppRunner<typeof app> = async (data, context) => {
 }
 
 const asdfSetup: AppRunner<typeof app> = async (data, context) => {
-  return group("Set up asdf", async () => {
+  return context.use("helper").group("Set up asdf", async () => {
     context.use("log").debug("Setting up system for asdf")
 
-    exportVariable("ASDF_DIR", data.input.asdfDir)
-    addPath(join(data.input.asdfDir, "bin"))
-    addPath(join(data.input.asdfDir, "shims"))
+    context.use("system").setEnvVar("ASDF_DIR", data.input.asdfDir)
+    context
+      .use("system")
+      .addPaths(
+        join(data.input.asdfDir, "bin"),
+        join(data.input.asdfDir, "shims")
+      )
   })
 }
 
 const asdfInstall: AppRunner<typeof app> = async (data, context) => {
   const executor = context.use("exec")
   const logger = context.use("log")
-  return group("Install asdf", async () => {
+  return context.use("helper").group("Install asdf", async () => {
     if (existsSync(data.input.asdfDir)) {
       logger.info(
         "Updating asdf to version '{0}' on (ASDF_DIR={1})",
@@ -88,7 +90,7 @@ const asdfInstall: AppRunner<typeof app> = async (data, context) => {
 }
 
 const asdfInstallPlugins: AppRunner<typeof app> = (data, context) => {
-  return group("Install asdf plugins", async () => {
+  return context.use("helper").group("Install asdf plugins", async () => {
     const installed = await asdfPluginList(context)
     const toolVersion = await asdfToolList(context, data.input.workDir)
     await Promise.all(
@@ -102,7 +104,7 @@ const asdfInstallPlugins: AppRunner<typeof app> = (data, context) => {
 }
 
 const asdfInstallTools: AppRunner<typeof app> = (data, context) => {
-  return group("Install asdf tools", () => {
+  return context.use("helper").group("Install asdf tools", () => {
     return asdfToolInstall(context, data.input.workDir)
   })
 }

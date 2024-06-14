@@ -8,13 +8,19 @@ import {
   ExecContextPlugin,
   CacheContextPlugin,
   toBool,
+  SystemContextPlugin,
+  IOContextPlugin,
+  HelperContextPlugin,
 } from "@kcws/github-actions"
 
 export const context = ContextBuilder.fromPackageJson()
   .addPlugin(new LogContextPlugin())
+  .addPlugin(new HelperContextPlugin())
   .addPlugin(new CacheContextPlugin())
   .addPlugin(new InputContextPlugin())
   .addPlugin(new ExecContextPlugin())
+  .addPlugin(new SystemContextPlugin())
+  .addPlugin(new IOContextPlugin())
   .build()
 
 export default Actions.builder(context, context => {

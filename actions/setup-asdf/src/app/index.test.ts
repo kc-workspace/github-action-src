@@ -55,5 +55,7 @@ describe("app.context", () => {
     expect(context.use("cache")).not.toBeFalsy()
     expect(context.use("log")).not.toBeFalsy()
     expect(context.use("exec")).not.toBeFalsy()
+    expect(context.use("io")).not.toBeFalsy()
+    expect(context.use("system")).not.toBeFalsy()
   })
 })

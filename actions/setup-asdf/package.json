@@ -19,17 +19,12 @@
     "clean": "heft clean"
   },
   "dependencies": {
-    "@actions/cache": "3.2.4",
     "@actions/core": "1.10.1",
-    "@actions/exec": "1.1.1",
-    "@actions/github": "6.0.0",
-    "@actions/http-client": "2.2.1",
-    "@actions/io": "1.1.3",
-    "@kcws/github-actions": "0.8.1"
+    "@kcws/github-actions": "0.9.0"
   },
   "devDependencies": {
     "@kcws/eslint-config": "1.21.1",
-    "@kcws/heft-node-rig": "0.25.0",
+    "@kcws/heft-node-rig": "0.26.0",
     "@kcws/prettier-config": "0.17.2",
     "@rushstack/heft": "0.66.18",
     "@types/heft-jest": "1.0.6",
