@@ -1,8 +1,8 @@
-const createConfig = require("@kcws/eslint-config")
+const createConfig = require('@kcws/eslint-config')
 module.exports = createConfig({
   cwd: __dirname,
-  profile: "node",
+  profile: 'node',
   jest: true,
   prettier: true,
-  ecma: "latest",
+  ecma: 'latest',
 })
