@@ -24,10 +24,12 @@
   "devDependencies": {
     "@kcws/eslint-config": "1.21.1",
     "@kcws/heft-node-rig": "0.26.0",
+    "@kcws/lintstaged-config": "0.43.2",
     "@kcws/prettier-config": "0.17.2",
     "@rushstack/heft": "0.66.18",
     "@types/heft-jest": "1.0.6",
-    "@types/node": "20.14.2"
+    "@types/node": "20.14.2",
+    "prettier": "3.3.2"
   },
   "engines": {
     "node": ">=20"
